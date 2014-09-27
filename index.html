@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap 101 Template</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/bootstrap-theme.min.css" rel="stylesheet">
+	<link href="theme.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body role="document">
+    <!--<h1>Hello, world!</h1> -->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="js/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+	<script>
+	function calcLinkMitigation(links) {
+       return Math.round(400/9*Math.atan(links/Math.E))
+    }
+
+	$( document ).ready(function() {
+        console.log( "document loaded" );
+		$("#inNumberLinks").change(function() {
+      //console.log()
+			$("#outLinkAlert").text("Link Mitigation von " + calcLinkMitigation($("#inNumberLinks").val()) + "%");
+      $("#outLinkAlert").removeClass("hidden");
+
+      if($("#outTotalAlert").hasClass("hidden") === false) {
+        $("select").trigger("change");
+      }
+		});
+
+		$("select").change(function() {
+			console.log("in selected");
+      var totalmiti = 0;
+    //  $("#outTotalAlert").text(function () {
+          var linkmiti = 0 + calcLinkMitigation($("#inNumberLinks").val());
+          var shieldmiti =  parseInt($("#inSlotOne").val()) + parseInt($("#inSlotTwo").val()) + parseInt($("#inSlotThree").val()) + parseInt($("#inSlotFour").val());
+          console.log(shieldmiti);
+
+          $("#outTotalAlert").removeClass("alert-info");
+          $("#outTotalAlert").removeClass("alert-success");
+          $("#outTotalAlert").addClass("alert-info");
+          $("#outTotalWarning").addClass("hidden");
+          totalmiti =  linkmiti + shieldmiti;
+          if(totalmiti >= 95) {
+            $("#outTotalWarning").text("Maximale Mitigation erreicht! Weitere Schilde/Links erhöhen nicht mehr den Schutz des Portals!");
+            $("#outTotalWarning").removeClass("hidden");
+            $("#outTotalAlert").removeClass("alert-info");
+            $("#outTotalAlert").addClass("alert-success");
+
+            totalmiti = 95;
+          }
+
+      //  });
+      $("#outTotalAlert").text("Total Mitigation von " + totalmiti + "%");
+      $("#outTotalAlert").removeClass("hidden");
+
+		});
+
+
+    });
+
+
+
+	</script>
+
+	<!-- Fixed navbar -->
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="http://getbootstrap.com/examples/theme/#">Bootstrap theme</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="http://getbootstrap.com/examples/theme/#">Home</a></li>
+            <li><a href="http://getbootstrap.com/examples/theme/#about">About</a></li>
+            <li><a href="http://getbootstrap.com/examples/theme/#contact">Contact</a></li>
+            <li class="dropdown">
+              <a href="http://getbootstrap.com/examples/theme/#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="http://getbootstrap.com/examples/theme/#">Action</a></li>
+                <li><a href="http://getbootstrap.com/examples/theme/#">Another action</a></li>
+                <li><a href="http://getbootstrap.com/examples/theme/#">Something else here</a></li>
+                <li class="divider"></li>
+                <li class="dropdown-header">Nav header</li>
+                <li><a href="http://getbootstrap.com/examples/theme/#">Separated link</a></li>
+                <li><a href="http://getbootstrap.com/examples/theme/#">One more separated link</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+
+	 <div class="container" role="main">
+		<div class="page-header">
+			<h1>Ingress - Portal Mitigation</h1>
+      Die Portal Mitigation ist auf gut deutsch die <em>Portalschadensabschwächungsberechnung</em>. You have to love the german language ;)
+		</div>
+
+
+		<!-- <form  class="form-horizontal" role="form">
+			<div class="form-group-sm"> -->
+				<div class="row form-group">
+					<div class="col-sm-2">
+						<label for="inNumberLinks">Anzahl der Portallinks</label>
+				<!--<input type="number" class="form-control" id="inNumberLinks" min="0" max="99" onchange="$('p.bg-success').append(calcMitigation($('#inNumberLinks')[0]))"> -->
+				<!--<input type="number" class="form-control" id="inNumberLinks" min="0" max="99" onchange="alert(calcMitigation($('#inNumberLinks.val()')))"> -->
+					</div>
+					<div class="col-sm-2">
+						<input type="number" class="form-control" id="inNumberLinks" min="0" max="99">
+					</div>
+	<!--				<div class="col-sm-2 text-right">
+
+
+
+  					<label for="inNumberLinks"> Link Mitigation:</label>
+					</div>
+					<div class="col-sm-1">
+						<input type="number" class="form-control input-sm" id="outMitigation" disabled>
+					</div> -->
+				</div>
+
+        <div class="row form-group">
+					<div class="col-sm-2">
+						<label for="inSlotOne">Schild #1</label>
+					</div>
+					<div class="col-sm-2">
+						<select id="inSlotOne" class="form-control">
+                <option value="0">none</option>
+                <option value="30">common</option>
+                <option value="40">rare</option>
+                <option value="60">very rare</option>
+            </select>
+          </div>
+        </div>
+			    <div class="row form-group">
+					<div class="col-sm-2">
+						<label for="inSlotTwo">Schild #2</label>
+					</div>
+					<div class="col-sm-2">
+						<select id="inSlotTwo" class="form-control">
+                <option value="0">none</option>
+                <option value="30">common</option>
+                <option value="40">rare</option>
+                <option value="60">very rare</option>
+            </select>
+          </div>
+        </div>
+		    <div class="row form-group">
+					<div class="col-sm-2">
+						<label for="inSlotThree">Schild #3</label>
+					</div>
+					<div class="col-sm-2">
+						<select id="inSlotThree" class="form-control">
+                <option value="0">none</option>
+                <option value="30">common</option>
+                <option value="40">rare</option>
+                <option value="60">very rare</option>
+            </select>
+          </div>
+        </div>
+		    <div class="row form-group">
+					<div class="col-sm-2">
+						<label for="inSlotFour">Schild #4</label>
+					</div>
+					<div class="col-sm-2">
+						<select id="inSlotFour" class="form-control">
+                <option value="0">none</option>
+                <option value="30">common</option>
+                <option value="40">rare</option>
+                <option value="60">very rare</option>
+            </select>
+          </div>
+        </div>
+
+
+
+      <!--	<div class="row form-group">
+					<div class="col-sm-6 text-right">
+						<label for="outTotalMitigation"> Total Mitigation:</label>
+					</div>
+					<div class="col-sm-1">
+						<input type="number" class="form-control input-sm" id="outTotalMitigation" disabled>
+					</div>
+				</div> -->
+
+
+<!--			</div>
+
+		</form> -->
+
+<hr>
+<div class="row">
+  <div class="col-sm-4 alert alert-info hidden" id="outLinkAlert">
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-4 alert alert-info hidden" id="outTotalAlert">
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-4 alert alert-warning hidden" id="outTotalWarning">
+  </div>
+</div>
+
+	</div>
+
+  </body>
+</html>
